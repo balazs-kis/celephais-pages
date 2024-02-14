@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link href='./img/favicon.ico' rel='icon' type='image/x-icon' />
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+    <title>Home</title>
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #333333;
+            background-image: url("https://celephais.cc/api/image/daily");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Raleway', sans-serif;
+            color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            padding: 50px 50px 0 100px;
+        }
+
+        .row-div {
+            margin: 0 0 20px 0;
+            display: flex;
+        }
+
+        .clock-div {
+            font-size: 7.5rem;
+            text-shadow: 2px 2px 5px #111111;
+            text-align: right;
+            user-select: none;
+            cursor: default;
+        }
+
+        .date-div {
+            font-size: 2.5rem;
+            text-shadow: 1.5px 1.5px 3px #111111;
+            text-align: right;
+            user-select: none;
+            cursor: default;
+        }
+
+        .links-div {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .links-container {
+            padding: 6px 6px;
+            border-radius: 15px;
+            background-color: rgba(237, 237, 237, 0.25);
+            display: flex;
+            height: 57px;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 2px 2px 5px #111111;
+        }
+
+        .link-a {
+            color: inherit;
+            text-decoration: none;
+            background: rgba(237, 237, 237, 0.9);
+            height: 29px;
+            width: 29px;
+            padding: 10px;
+            margin: 0 10px;
+            border-radius: 49px;
+            transition: all ease 0.1s;
+        }
+
+        .link-a:hover {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transform: scale(1.25);
+        }
+
+        .weather {
+            flex: 1;
+            user-select: none;
+            cursor: default;
+            padding-top: 50px;
+        }
+
+        .date-and-time {
+            flex: 1;
+        }
+
+        .temperature-line {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .shadowed {
+            margin: 0 5px;
+            text-shadow: 2px 2px 5px #111111;
+        }
+
+        .temperature {
+            font-size: 4rem;
+            text-shadow: 2px 2px 5px #111111;
+            text-align: right;
+            margin-left: 12px;
+        }
+
+        .location {
+            font-size: 2.5rem;
+            text-align: right;
+            text-shadow: 1.5px 1.5px 3px #111111;
+        }
+
+        .vector-img {
+            width: 100%;
+            max-height: 100%;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row-div">
+        <div class="date-and-time">
+            <div class="clock-div" id="clock"></div>
+            <div class="date-div" id="date"></div>
+        </div>
+    </div>
+    <div class="row-div">
+        <div class="weather">
+            <div class="temperature-line">
+                <i id="condition"></i>
+                <span class="temperature" id="temperature"></span>
+            </div>
+            <div class="location" id="location"></div>
+        </div>
+    </div>
+
+    <script>
+        // Clock update
+        const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: '2-digit' };
+        const clock = document.getElementById('clock');
+        const date = document.getElementById('date');
+
+        const setTime = () => {
+            const d = new Date();
+            clock.innerText = d.toLocaleTimeString('de-DE', timeOptions);
+            date.innerText = d.toLocaleDateString('en-US', dateOptions);
+        }
+
+        setTime();
+        setInterval(setTime, 500);
+
+        // Weather update
+        var latitude, longitude;
+        const condition = document.getElementById('condition');
+        const temperature = document.getElementById('temperature');
+        const locationName = document.getElementById('location');
+
+        navigator.geolocation.getCurrentPosition(p => {
+            latitude = p.coords.latitude;
+            longitude = p.coords.longitude;
+
+            updateWeather();
+        });
+
+        const updateWeather = () => {
+            fetch(`https://celephais.cc/api/weather?latitude=${latitude}&longitude=${longitude}`)
+                .then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    condition.className = `shadowed fas fa-3x ${data.conditionFontCode}`;
+                    condition.title = capitalizeFirstLetter(data.condition);
+                    temperature.innerText = `${data.temperatureCelsius} °C`;
+                    temperature.title = `Feels like: ${data.feelsLikeTemperatureCelsius} °C`
+                    locationName.innerText = data.locationName;
+                }).catch(function (e) {
+                    console.log("Error during weather request: " + e);
+                });
+        }
+
+        const tenMinutes = 10 * 60 * 1000;
+        setInterval(updateWeather, tenMinutes);
+
+        // Utils
+        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+    </script>
+
+</body>
+
+</html>
