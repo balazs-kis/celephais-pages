@@ -185,7 +185,7 @@
         });
 
         const updateWeather = () => {
-            fetch(`https://api.celephais.cc/weather?latitude=${latitude}&longitude=${longitude}`)
+            fetch(`https://api.celephais.cc/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
                 .then(function (response) {
                     return response.json();
                 }).then(function (data) {
@@ -195,7 +195,7 @@
                     temperature.title = `Feels like: ${data.feelsLikeTemperatureCelsius} °C`
                     locationName.innerText = data.locationName;
                 }).catch(function (e) {
-                    console.log("Error during weather request: " + e);
+                    console.log('Error during weather request: ' + e);
                 });
         }
 
