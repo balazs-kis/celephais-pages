@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link href='./img/favicon.ico' rel='icon' type='image/x-icon' />
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+    <title>Celephais - Home</title>
+    <style>
+        html {
+            min-width: 520px;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #333333;
+            background-image: url("https://api.celephais.cc/image/daily");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffffff;
+            min-height: 770px;
+            min-width: 630px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            position: absolute;
+            min-width: 630px;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex: auto;
+            /* background-color: rgba(59, 59, 59, 0.5);
+            backdrop-filter: blur(8px); */
+        }
+
+
+        .header-item {
+            font-size: 24px;
+            background-color: rgba(59, 59, 59, 0.67);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            margin: 4px 0 4px 10px;
+            padding: 4px 16px;
+            cursor: default;
+            user-select: none;
+        }
+
+        .clock {}
+
+        .date {}
+
+        .weather {
+            margin-left: auto;
+            margin-right: 10px;
+        }
+
+        .main {
+            padding: 0px;
+            margin: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .main-item {
+            flex: auto;
+            padding: 0;
+            margin: 20px;
+            background-color: rgba(59, 59, 59, 0.67);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            max-width: 272px;
+            cursor: pointer;
+            transition: transform .15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .main-item:hover {
+            transform: scale(1.15);
+        }
+
+        .main-item img {
+            max-width: 232px;
+            max-height: 232px;
+            margin: 20px 20px 10px 20px;
+            user-select: none;
+        }
+
+        .main-item span {
+            text-align: center;
+            display: block;
+            user-select: none;
+            margin: 0 0 8px 0;
+            font-size: 1.5rem;
+        }
+
+        .loader {
+            margin-top: 8px;
+            width: 60px;
+            aspect-ratio: 5;
+            --_g: no-repeat radial-gradient(circle closest-side, #fff 90%, #0000);
+            background:
+                var(--_g) 0% 50%,
+                var(--_g) 50% 50%,
+                var(--_g) 100% 50%;
+            background-size: calc(100%/3) 100%;
+            animation: l7 1s infinite linear;
+        }
+
+        @keyframes l7 {
+            33% {
+                background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+            }
+
+            50% {
+                background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+            }
+
+            66% {
+                background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+            }
+        }
+
+        @keyframes l1 {
+            to {
+                clip-path: inset(0 -34% 0 0)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div id="clock" class="header-item clock"></div>
+        <div id="date" class="header-item date"></div>
+
+        <div class="header-item weather">
+            <div id="w-loader" class="loader"></div>
+            <span id="condition" class="condition" hidden></span>
+            <span id="temperature" class="temperature" hidden></span>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="main-row">
+            <a class="main-item" href="https://plex.celephais.cc">
+                <img src="./img/plex.png" />
+                <span>plex</span>
+            </a>
+            <a class="main-item" href="https://mm.celephais.cc">
+                <img src="./img/mattermost.svg" />
+                <span>Mattermost</span>
+            </a>
+        </div>
+
+        <div class="main-row">
+            <a class="main-item" href="https://qbit.celephais.cc">
+                <img src="./img/qbit.svg" />
+                <span>qBittorrent</span>
+            </a>
+            <a class="main-item" href="https://splash.celephais.cc">
+                <img src="./img/splash.svg" />
+                <span>Splash</span>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // Clock update
+        const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+        const timeOptions = { hour: 'numeric', minute: '2-digit' };
+        const clock = document.getElementById('clock');
+        const date = document.getElementById('date');
+
+        const setTime = () => {
+            const d = new Date();
+            clock.innerText = d.toLocaleTimeString('de-DE', timeOptions);
+            date.innerText = d.toLocaleDateString('en-US', dateOptions);
+        }
+
+        setTime();
+        setInterval(setTime, 500);
+
+        // Weather update
+        var latitude, longitude;
+        const condition = document.getElementById('condition');
+        const temperature = document.getElementById('temperature');
+        const weatherLoader = document.getElementById('w-loader');
+
+        navigator.geolocation.getCurrentPosition(p => {
+            latitude = p.coords.latitude;
+            longitude = p.coords.longitude;
+
+            updateWeather();
+        });
+
+        const updateWeather = () => {
+            fetch(`https://api.celephais.cc/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
+                .then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    condition.className = `shadowed fas ${data.conditionFontCode}`;
+                    condition.title = capitalizeFirstLetter(data.condition);
+                    temperature.innerText = `${data.temperatureCelsius} °C`;
+                    temperature.title = `Feels like: ${data.feelsLikeTemperatureCelsius} °C`
+
+                    weatherLoader.hidden = true;
+                    condition.hidden = false;
+                    temperature.hidden = false;
+                }).catch(function (e) {
+                    console.log('Error during weather request: ' + e);
+                });
+        }
+
+        const tenMinutes = 10 * 60 * 1000;
+        setInterval(updateWeather, tenMinutes);
+
+        // Utils
+        const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+    </script>
+</body>
+
+</html>
