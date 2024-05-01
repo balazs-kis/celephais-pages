@@ -18,7 +18,7 @@
             height: 100%;
             width: 100%;
             background-color: #333333;
-            background-image: url("https://api.celephais.cc/image/daily");
+            background-image: url("https://api.celephais.eu/image/daily");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -175,22 +175,22 @@
     <div class="main">
 
         <div class="main-row">
-            <a class="main-item" href="https://plex.celephais.cc">
+            <a class="main-item" href="https://plex.celephais.eu">
                 <img src="./img/plex.png" />
                 <span>plex</span>
             </a>
-            <a class="main-item" href="https://mm.celephais.cc">
+            <a class="main-item" href="https://mm.celephais.eu">
                 <img src="./img/mattermost.svg" />
                 <span>Mattermost</span>
             </a>
         </div>
 
         <div class="main-row">
-            <a class="main-item" href="https://qbit.celephais.cc">
+            <a class="main-item" href="https://qbit.celephais.eu">
                 <img src="./img/qbit.svg" />
                 <span>qBittorrent</span>
             </a>
-            <a class="main-item" href="https://splash.celephais.cc">
+            <a class="main-item" href="https://splash.celephais.eu">
                 <img src="./img/splash.svg" />
                 <span>Splash</span>
             </a>
@@ -228,7 +228,7 @@
         });
 
         const updateWeather = () => {
-            fetch(`https://api.celephais.cc/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
+            fetch(`https://api.celephais.eu/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
                 .then(function (response) {
                     return response.json();
                 }).then(function (data) {

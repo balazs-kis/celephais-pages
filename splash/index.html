@@ -17,7 +17,7 @@
             height: 100%;
             width: 100%;
             background-color: #333333;
-            background-image: url("https://api.celephais.cc/image/daily");
+            background-image: url("https://api.celephais.eu/image/daily");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -185,7 +185,7 @@
         });
 
         const updateWeather = () => {
-            fetch(`https://api.celephais.cc/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
+            fetch(`https://api.celephais.eu/weather?latitude=${latitude}&longitude=${longitude}`, { mode: 'cors' })
                 .then(function (response) {
                     return response.json();
                 }).then(function (data) {
