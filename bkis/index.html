@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <link href='./img/favicon.ico' rel='icon' type='image/x-icon' />
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+
+    <title>Balazs Kis - Developer</title>
+    <style>
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg) translate(-30px, -30px);
+            }
+
+            25% {
+                transform: rotate(90deg) translate(30px, -30px);
+            }
+
+            50% {
+                transform: rotate(180deg) translate(30px, 30px);
+            }
+
+            75% {
+                transform: rotate(270deg) translate(-30px, 30px);
+            }
+
+            100% {
+                transform: rotate(360deg) translate(-30px, -30px);
+            }
+        }
+
+        .gradient {
+            --size: 750px;
+            --speed: 10s;
+            --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8);
+            width: var(--size);
+            height: var(--size);
+            filter: blur(calc(var(--size) / 5));
+            background-image: linear-gradient(#4377ef, #7befd0);
+            animation: rotate var(--speed) var(--easing) alternate infinite;
+            border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
+        }
+
+        @media (min-width: 720px) {
+            .gradient {
+                --size: 500px;
+            }
+        }
+
+        body {
+            background-color: #071c39;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            place-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+
+        * {
+            transition: all 0.5s ease-out;
+        }
+
+        .basic-text {
+            /* flex: auto; */
+            display: flex;
+            font-size: 3em;
+        }
+
+        .content-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-text {
+            color: #071c39;
+            font-family: 'Raleway';
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gradient"></div>
+    <div class="content-text">
+        <div class="basic-text">🏗️</div>
+        <div class="basic-text main-text">Under construction</div>
+    </div>
+</body>
+
+</html>
